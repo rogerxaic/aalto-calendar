@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: "node:8"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+    - ./:/home/node/app
+    command: "bash run.sh"
+    environment:
+    - VIRTUAL_HOST=calendar-translator.domain.cat
+    - LETSENCRYPT_HOST=calendar-translator.domain.cat
+    - LETSENCRYPT_EMAIL=first.last@domain.cat
+    - PORT=8080
+    - VIRTUAL_PORT=8080
+    expose:
+    - 8080
+    networks:
+    - default
+    restart: always
+
+networks:
+  default:
+    external:
+      name: webproxy
